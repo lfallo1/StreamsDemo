@@ -19,7 +19,7 @@ public class Driver {
 		
 		//------- Stream functions -----------
 		
-		sortingExample(employees);
+		comparatorExample(employees);
 		
 		//top 5 highest paid employees
 //		employees.stream()
@@ -63,6 +63,12 @@ public class Driver {
 //		processStream(eStream);
 	}
 	
+	private static void comparatorExample(List<Employee> employees){
+		Consumer<String> printer = System.out::println;
+		Comparator<Employee> cmpEmployeeSalary = Comparator.comparing(Employee::getSalary);
+		employees.stream().sorted(cmpEmployeeSalary).forEach(e->printer.accept(e.getName() + " " + e.getSalary()));
+	}
+	
 	private static void anonymousClasses(){
 		Consumer<String> printer = System.out::println;
 		printer.accept("Harry");
@@ -101,12 +107,6 @@ public class Driver {
 			.sorted((e1, e2) -> e1.getName().compareTo(e2.getName()))
 			.collect(Collectors.toList())
 			.forEach(e -> System.out.println(f.apply(e)));
-		
-		Consumer<String> printer = System.out::println;
-		printer.accept("Harry");
-		
-		BinaryOperator<Integer> sum = Integer::sum;
-		System.out.println("res is: " + sum.apply(34, 55));
 	}
 
 	private static void processStream(Stream<Employee> stream){
