@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 
 import com.streams.dal.DataLayer;
 import com.streams.model.Employee;
+import com.streams.model.EmployeeDto;
 
 public class Driver {
 
@@ -65,8 +66,15 @@ public class Driver {
 	
 	private static void comparatorExample(List<Employee> employees){
 		Consumer<String> printer = System.out::println;
-		Comparator<Employee> cmpEmployeeSalary = Comparator.comparing(Employee::getSalary);
-		employees.stream().sorted(cmpEmployeeSalary).forEach(e->printer.accept(e.getName() + " " + e.getSalary()));
+		employees.stream()
+			.filter(e -> e.getSalary() > 750000)
+			.sorted(Comparator.comparing(Employee::getSalary).reversed())
+			.map(e -> {
+				EmployeeDto dto = new EmployeeDto(e.getName(), e.getSalary(), e.getPosition().getName());
+				return dto;
+			})
+			.filter(d -> d.getJobTitle().equals("Developer"))
+			.forEach(dto -> printer.accept(dto.toString()));
 	}
 	
 	private static void anonymousClasses(){
