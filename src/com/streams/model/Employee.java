@@ -82,4 +82,8 @@ public class Employee {
 				+" - $"+ this.salary +"] - dob: " 
 				+ new SimpleDateFormat("MM-dd-yyyy").format(this.dateOfBirth) + "("+ getAge() +" yrs old)";
 	}
+	
+	public static void doAThing(Employee e){
+		System.out.println("Doin a thing : " + e);
+	}
 }
