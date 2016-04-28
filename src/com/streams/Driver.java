@@ -97,7 +97,7 @@ public class Driver {
 		
 //		Supplier<Employee> supplier = () -> employees.get(0);
 		
-		//f***in aye... worst method ever.
+		//f'in aye... worst method ever.
 		((Consumer<Employee>) e -> System.out.println(e))
 			.accept(((Supplier<Employee>)() -> employees.get(0))
 			.get());
