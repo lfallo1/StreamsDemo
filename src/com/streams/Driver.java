@@ -2,6 +2,7 @@ package com.streams;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -67,11 +68,17 @@ public class Driver {
 	}
 	
 	/**
-	 * Consumer --> void accept(T t)
-	 * Supplier --> void get()
-	 * Predicate --> Boolean test(T t)
-	 * Function --> R apply(T t);  MethodRef
+	 * Four Categories
+	 * (1) Consumer --> void accept(T t) ----- Also has BiConsumer
+	 * (2) Supplier --> void get() ------ Supports method ref
+	 * (3) Predicate --> Boolean test(T t) ------- BiPredicate
+	 * (4) Function --> R apply(T t);  MethodRef ------- also has BiFunction
+	 * 
+	 * Others:
 	 * BinaryOperator<T> ---> ex. (i1, i1) --> i1 + i1; alternatively can use static method ref with Integer::sum since Integer implements a static method Integer sum(int n1, int n2){ ... }
+	 * IntPredicate
+	 * IntFunction
+	 * IntToDoubleFunction
 	 * @param employees
 	 */
 	
@@ -97,6 +104,15 @@ public class Driver {
 	}
 	
 	private static void functionExample(List<Employee> employees){
+		
+		BiFunction<Employee, EmployeeDto, String> bif = (Employee e, EmployeeDto dto) -> {
+			String dtoName = dto.getName();
+			String eName = e.getName();
+			return dtoName.equals(eName) ? eName : "No match";
+		};
+		
+		bif.apply(employees.get(0), new EmployeeDto("harry", 50000.0, "Sales"));
+		
 		Function<Employee, Double> fn_old = new Function<Employee, Double>() {
 
 			@Override
